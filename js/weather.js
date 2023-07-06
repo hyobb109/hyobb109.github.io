@@ -15,7 +15,8 @@ function onGeoOk(position) {
 }
 
 function onGeoError() {
-    alert("Can't find you. No weather for you.");
+    const location = document.querySelector("#weather span:first-child");
+    location.innerText = "No location";
 }
 
 navigator.geolocation.getCurrentPosition(onGeoOk, onGeoError);
