@@ -25,10 +25,13 @@ function checkToDo(event) {
     if (span.style.textDecoration !== "line-through") {
         event.target.setAttribute("class", "fa-regular fa-square-check");
         span.style.textDecoration = "line-through";
+        toDos.find((toDo) => toDo.id === parseInt(li.id)).checked = true;
     } else {
         event.target.setAttribute("class", "fa-regular fa-square");
         span.style.textDecoration = "none";
+        toDos.find((toDo) => toDo.id === parseInt(li.id)).checked = false;
     }
+    saveToDos();
 }
 
 function applyEdit(event) {
@@ -79,6 +82,10 @@ function paintToDo(newToDo) {
     checkBox.addEventListener("click", checkToDo);
     const span = document.createElement("span");
     span.innerText = newToDo.text;
+    if (newToDo.checked) {
+        checkBox.setAttribute("class", "fa-regular fa-square-check");
+        span.style.textDecoration = "line-through";
+    }
     const del = document.createElement("i");
     del.setAttribute("class", "fa-solid fa-trash");
     del.addEventListener("click", deleteToDo);
@@ -99,6 +106,7 @@ function handleToDoSubmit(event) {
     const newToDoObj = {
         text: newToDo,
         id: Date.now(),
+        checked: false,
     };
     if (newToDoObj.text !== "") {
         toDos.push(newToDoObj);
